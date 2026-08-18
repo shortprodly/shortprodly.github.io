@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0907">
+<title>Daftar Akun - MyShort App</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{min-height:100vh;padding:20px;display:flex;justify-content:center;align-items:center;color:#f7f2e6;position:relative;overflow-x:hidden;background:radial-gradient(circle at 50% -10%,rgba(226,178,67,.30),transparent 34%),radial-gradient(circle at 0% 100%,rgba(151,105,24,.16),transparent 32%),linear-gradient(145deg,#18140d 0%,#0b0a08 45%,#050505 100%)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:radial-gradient(circle,#f4cf72 .55px,transparent .65px);background-size:20px 20px}
+body:after{content:"";position:fixed;width:520px;height:520px;border:1px solid rgba(232,189,88,.12);border-radius:50%;top:-300px;left:50%;transform:translateX(-50%);box-shadow:0 0 0 45px rgba(232,189,88,.025),0 0 0 90px rgba(232,189,88,.018);pointer-events:none}
+.container{width:100%;max-width:390px;padding:31px 28px 27px;border-radius:24px;border:1px solid rgba(232,189,88,.30);background:linear-gradient(145deg,rgba(35,31,22,.98),rgba(13,13,12,.98));box-shadow:0 25px 70px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,235,170,.08);position:relative;z-index:1}
+.container:before{content:"";position:absolute;inset:7px;border:1px solid rgba(232,189,88,.08);border-radius:19px;pointer-events:none}
+.logo{text-align:center;margin-bottom:23px;position:relative;z-index:2}
+.logo-mark{width:68px;height:68px;margin:0 auto 12px;display:grid;place-items:center;border-radius:20px;border:1px solid #d8a83f;color:#ffe8a3;font-size:25px;font-weight:900;letter-spacing:-1px;background:linear-gradient(145deg,#2c2414,#0e0d0a);box-shadow:0 8px 25px rgba(0,0,0,.45),inset 0 0 20px rgba(232,189,88,.08),0 0 25px rgba(216,168,63,.10)}
+.logo h2{font-size:22px;color:#ffe29a;letter-spacing:.2px}
+.logo p{margin-top:5px;color:#85817a;font-size:10px}
+.input-group{margin-bottom:14px;position:relative;z-index:2}
+label{display:block;margin-bottom:7px;color:#b8b1a2;font-size:11px;font-weight:bold}
+input{width:100%;padding:13px;border:1px solid #3a352b;border-radius:10px;outline:none;background:rgba(9,9,8,.82);color:#f7f2e6;font-size:14px;transition:.2s;box-shadow:inset 0 1px 5px rgba(0,0,0,.25)}
+input::placeholder{color:#5f5c57}
+input:focus{border-color:#d8a83f;box-shadow:0 0 0 2px rgba(216,168,63,.10),inset 0 1px 5px rgba(0,0,0,.25)}
+button{width:100%;margin-top:5px;padding:14px;border:1px solid #e7bd5d;border-radius:10px;color:#1a1408;background:linear-gradient(135deg,#ffe7a0 0%,#e8bd58 48%,#c58b24 100%);font-size:14px;font-weight:900;letter-spacing:.3px;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.35);transition:.2s;position:relative;z-index:2}
+button:hover{transform:translateY(-1px);filter:brightness(1.06)}
+button:active{transform:translateY(0)}
+.success{margin-top:15px;padding:10px;display:none;text-align:center;border:1px solid #315c3d;border-radius:9px;background:#102016;color:#8fe0a5;font-size:11px;font-weight:bold}
+.error{margin-top:15px;padding:10px;display:none;text-align:center;border:1px solid #63352f;border-radius:9px;background:#211311;color:#ffaaa0;font-size:11px;font-weight:bold}
+.bottom{margin-top:21px;padding-top:17px;border-top:1px solid #29261f;text-align:center;color:#77736b;font-size:11px;position:relative;z-index:2}
+.bottom a{color:#f0c85f;text-decoration:none;font-weight:bold}
+.bottom a:hover{color:#ffe39a}
+@media(max-width:430px){body{padding:14px}.container{padding:28px 22px 24px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="logo">
+<div class="logo-mark">MS</div>
+<h2>Daftar Member</h2>
+<p>Bergabung dengan MyShort App</p>
+</div>
+<div class="input-group">
+<label>Nama Lengkap</label>
+<input type="text" id="nama" placeholder="Masukkan Nama" autocomplete="name">
+</div>
+<div class="input-group">
+<label>Email</label>
+<input type="email" id="email" placeholder="Masukkan Email" autocomplete="email">
+</div>
+<div class="input-group">
+<label>Nomor HP</label>
+<input type="text" id="hp" placeholder="08xxxxxxxxxx" autocomplete="tel">
+</div>
+<div class="input-group">
+<label>Password</label>
+<input type="password" id="password" placeholder="Minimal 6 karakter" autocomplete="new-password">
+</div>
+<div class="input-group">
+<label>Kode Referral (Opsional)</label>
+<input type="text" id="referral" placeholder="Masukkan kode referral" autocomplete="off">
+</div>
+<button onclick="register()">DAFTAR SEKARANG</button>
+<p class="success" id="success">Pendaftaran berhasil.</p>
+<p class="error" id="error">Semua data wajib diisi.</p>
+<div class="bottom">Sudah punya akun? <a href="index.html">Login</a></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="app.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>
