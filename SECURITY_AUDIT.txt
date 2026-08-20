@@ -1,0 +1,46 @@
+MYSHORT APP - SECURITY REVIEW
+Tanggal: 20 Agustus 2026
+
+HASIL UTAMA
+1. Sebelum patch, claim_mission() mengambil reward langsung dari missions.reward dan hanya
+   memeriksa apakah user sudah pernah klaim mission_id tersebut. Tidak ada validasi AI-MAX,
+   jam 12-24 WIB, atau tanggal harian di fungsi tersebut.
+2. Sebelum patch, policy profiles_update mengizinkan member mengubah seluruh kolom profilnya.
+   Ini berbahaya karena kolom role, XP, status, dan referral_code berada pada tabel yang sama.
+3. Sebelum patch, member dapat INSERT langsung ke deposits dan menentukan status sendiri.
+   Ini tidak langsung menambah saldo, tetapi memperbesar permukaan manipulasi data.
+4. Referral lama membayar Rp5.000 otomatis ketika akun baru dibuat.
+5. Misi lama memakai user_missions UNIQUE(user_id, mission_id), sehingga tidak cocok untuk
+   klaim harian tanpa model tanggal.
+
+PATCH YANG DITERAPKAN
+- profiles UPDATE langsung dari authenticated dicabut.
+- update_my_profile() hanya menerima nama dan nomor HP; email disinkronkan dari Auth.
+- request_deposit() memaksa status deposit = pending.
+- claim_mission() lama dinonaktifkan.
+- purchase_ai_max() memverifikasi saldo dan memotong Rp100.000 secara atomik.
+- ai_max_purchases menyimpan status AI-MAX aktif.
+- claim_ai_max_daily_reward() menetapkan reward Rp8.000 di server.
+- Waktu klaim dihitung PostgreSQL dengan Asia/Jakarta dan hanya 12.00 sampai sebelum 24.00.
+- unique(user_id, claim_date) mencegah dua klaim pada hari yang sama.
+- claim_referral_reward() menghitung minimal 3 referral yang emailnya terverifikasi DAN sudah
+  memiliki pembelian AI-MAX Rp100.000, lalu memberikan Rp30.000 satu kali. Purchase AI-MAX
+  otomatis mengubah referral menjadi status qualified; verifikasi email saja tidak memenuhi syarat.
+- Referral baru tidak lagi membayar Rp5.000 otomatis.
+- Tabel reward baru memakai RLS dan tidak menyediakan INSERT/UPDATE/DELETE untuk member.
+
+BATASAN
+- Browser tetap dapat dimodifikasi. Itu normal dan bukan batas keamanan.
+- Jangan pernah memasukkan service_role key, database password, atau secret key ke HTML/JS.
+- Admin tetap merupakan pihak yang dipercaya untuk menyetujui deposit dan withdrawal.
+- Penggunaan HTTPS/GitHub Pages + Supabase Auth tetap diperlukan.
+
+INSTALASI
+Pilihan A:
+1. Jalankan supabase_schema.sql.
+2. Jalankan supabase_security_migration.sql.
+
+Pilihan B:
+1. Gunakan supabase_schema_secure.sql sebagai SQL gabungan.
+
+Setelah SQL selesai, upload file website hasil patch.
