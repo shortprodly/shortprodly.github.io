@@ -1,0 +1,22 @@
+Upload seluruh isi folder ini ke repository GitHub Pages.
+
+File utama:
+index.html
+login.html
+registrasi.html / register.html
+forgot-password.html
+reset-password.html
+dashboard.html
+mission.html
+wallet.html
+profile.html
+referral.html
+withdrawal.html
+deposit.html
+bank.html
+history.html
+admin.html
+supabase-config.js
+supabase_schema.sql (SQL ini tidak perlu diakses browser; hanya dijalankan di Supabase SQL Editor)
+
+Setelah upload, edit supabase-config.js dengan Project URL + Publishable key.
