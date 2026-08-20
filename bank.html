@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a0c">
+<title>Bank & MyShort </title>
+<style>
+:root{--bg:#08090b;--card:#15171b;--card2:#101216;--gold:#e6b84f;--gold2:#f7d77b;--muted:#9699a1;--line:rgba(230,184,79,.2);--danger:#6d2929}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;padding-bottom:82px;color:#f7f7f7;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(circle at 50% -8%,rgba(230,184,79,.15),transparent 34%),radial-gradient(circle at 100% 55%,rgba(230,184,79,.06),transparent 30%),var(--bg)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.13;background-image:radial-gradient(rgba(230,184,79,.5) .7px,transparent .7px);background-size:18px 18px}
+.wrap{position:relative;z-index:1;max-width:680px;margin:auto;padding:18px 15px 100px}
+.header{padding:8px 3px 18px}.brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;border:1px solid var(--gold);border-radius:13px;display:grid;place-items:center;color:var(--gold2);font-weight:900;background:linear-gradient(145deg,#211b0d,#111216);box-shadow:0 8px 24px #0008}.brand b{font-size:15px}.brand small{display:block;color:#777;font-size:9px;margin-top:2px}.header h1{font-size:23px;margin:19px 0 5px}.header p{margin:0;color:#888;font-size:10px}
+.card{background:linear-gradient(145deg,#181a1f,#101216);border:1px solid var(--line);border-radius:20px;padding:17px;margin:12px 0;box-shadow:0 15px 35px #0008}
+.section-title{font-size:13px;font-weight:800;margin-bottom:13px}.section-sub{font-size:9px;color:#777;margin:-7px 0 14px}
+.field{margin:13px 0}.field label{display:block;color:#a7a9ae;font-size:10px;margin-bottom:7px}.field input,.field select{width:100%;height:45px;border:1px solid #34373d;border-radius:11px;background:#0d0f12;color:#fff;padding:0 12px;font-size:11px;outline:none}.field input:focus,.field select:focus{border-color:#b88c32;box-shadow:0 0 0 3px rgba(230,184,79,.08)}.field select option{background:#111;color:#fff}
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:13px}.method{border:1px solid #303239;background:#111317;border-radius:12px;padding:11px 7px;color:#999;font-size:9px;text-align:center;cursor:pointer}.method strong{display:block;color:#ddd;font-size:11px;margin-bottom:3px}.method.active{border-color:#b88c32;background:#211a0c;color:#ffe29a}.method.active strong{color:#ffe29a}
+.btn{width:100%;height:45px;border:0;border-radius:11px;background:linear-gradient(135deg,#f7d77b,#d89e32);color:#17130a;font-weight:850;font-size:10px;cursor:pointer;box-shadow:0 8px 20px rgba(216,158,50,.12)}.btn:disabled{opacity:.55;cursor:not-allowed}
+.item{padding:13px 0;border-bottom:1px solid #292c32;display:flex;align-items:center;justify-content:space-between;gap:10px}.item:last-child{border-bottom:0}.item-main{display:flex;align-items:center;gap:10px;min-width:0}.item-icon{width:38px;height:38px;border-radius:11px;border:1px solid #51401d;background:#20190d;color:var(--gold2);display:grid;place-items:center;font-size:11px;font-weight:900;flex:0 0 38px}.item b{font-size:11px}.item small{display:block;color:#777;font-size:8.5px;margin-top:4px;word-break:break-word}.default{font-size:7px;color:#ffe19a;border:1px solid #665020;border-radius:20px;padding:3px 6px;margin-left:5px}.del{background:var(--danger);color:#ffd8d8;border:0;border-radius:8px;padding:7px 9px;font-size:8px;cursor:pointer}.empty{color:#777;font-size:9px;text-align:center;padding:12px}.notice{font-size:8.5px;line-height:1.55;color:#7e8188;border:1px solid #292c32;border-radius:13px;padding:11px;margin-top:12px}.notice strong{color:var(--gold2)}
+.toast{position:fixed;left:50%;bottom:91px;transform:translateX(-50%);background:#17191d;border:1px solid #665020;color:#ffe39a;border-radius:11px;padding:10px 13px;font-size:9px;display:none;z-index:20;box-shadow:0 12px 30px #0009}
+.bottom{position:fixed;z-index:10;left:0;right:0;bottom:0;height:72px;background:rgba(10,11,14,.97);border-top:1px solid #302715;display:grid;grid-template-columns:repeat(4,1fr)}.bottom a{text-decoration:none;color:#747780;text-align:center;font-size:8px;padding-top:10px}.bottom a.active{color:var(--gold2)}.bottom span{display:block;font-size:19px;margin-bottom:4px}
+@media(max-width:390px){.method-grid{gap:6px}.method{font-size:8px}.method strong{font-size:10px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="header">
+  <div class="brand"><div class="logo">SP</div><div><b>ShortPro</b><small>Member Area</small></div></div>
+  <h1>Bank & E-Wallet</h1>
+  <p>Simpan rekening bank atau nomor e-wallet untuk kebutuhan withdrawal.</p>
+</header>
+
+<section class="card">
+  <div class="section-title">Pilih Metode</div>
+  <div class="method-grid">
+    <button type="button" class="method active" data-method="DANA"><strong>DANA</strong>E-Wallet</button>
+    <button type="button" class="method" data-method="GoPay"><strong>GoPay</strong>E-Wallet</button>
+    <button type="button" class="method" data-method="OVO"><strong>OVO</strong>E-Wallet</button>
+  </div>
+
+  <form id="form">
+    <div class="field">
+      <label>Bank / E-Wallet</label>
+      <select id="method" required>
+        <option value="DANA">DANA</option>
+        <option value="GoPay">GoPay</option>
+        <option value="OVO">OVO</option>
+        <option value="BCA">BCA</option>
+        <option value="BRI">BRI</option>
+        <option value="BNI">BNI</option>
+        <option value="Mandiri">Mandiri</option>
+        <option value="BSI">BSI</option>
+        <option value="CIMB Niaga">CIMB Niaga</option>
+        <option value="BRI">BRI</option>
+        <option value="Bank Jago">Bank Jago</option>
+        <option value="SeaBank">SeaBank</option>
+        <option value="Bank Neo Commerce">Bank Neo Commerce</option>
+        <option value="Bank Permata">Bank Permata</option>
+        <option value="Bank Danamon">Bank Danamon</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label id="numberLabel">Nomor DANA</label>
+      <input id="number" type="tel" inputmode="numeric" autocomplete="tel" required placeholder="Contoh: 08xxxxxxxxxx">
+    </div>
+
+    <div class="field">
+      <label>Nama Pemilik</label>
+      <input id="name" type="text" autocomplete="name" required placeholder="Nama sesuai akun/rekening">
+    </div>
+
+    <button class="btn" id="saveBtn" type="submit">Simpan Rekening</button>
+  </form>
+
+  <div class="notice">
+    <strong>Tips:</strong> pastikan nama pemilik dan nomor rekening/e-wallet benar sebelum menyimpan.
+    Data disimpan ke akun member yang sedang login.
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title">Rekening Tersimpan</div>
+  <div class="section-sub">Rekening yang dapat digunakan untuk withdrawal.</div>
+  <div id="list"><div class="empty">Memuat...</div></div>
+</section>
+</main>
+
+<nav class="bottom">
+  <a href="dashboard.html"><span>⌂</span>Home</a>
+  <a href="mission.html"><span>◎</span>Mission</a>
+  <a class="active" href="bank.html"><span>▣</span>Bank</a>
+  <a href="profile.html"><span>♙</span>Profile</a>
+</nav>
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+const methods=["DANA","GoPay","OVO"];
+const methodEl=document.getElementById("method");
+const numberLabel=document.getElementById("numberLabel");
+const numberEl=document.getElementById("number");
+
+function showToast(message){
+  const el=document.getElementById("toast");
+  el.textContent=message;el.style.display="block";
+  clearTimeout(window.__toast);
+  window.__toast=setTimeout(()=>el.style.display="none",2500);
+}
+function updateNumberLabel(){
+  const m=methodEl.value;
+  const ewallet=methods.includes(m);
+  numberLabel.textContent=ewallet?("Nomor "+m):"Nomor Rekening";
+  numberEl.placeholder=ewallet?"Contoh: 08xxxxxxxxxx":"Masukkan nomor rekening";
+}
+methodEl.addEventListener("change",updateNumberLabel);
+
+document.querySelectorAll(".method").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".method").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    methodEl.value=btn.dataset.method;
+    updateNumberLabel();
+  });
+});
+
+function iconText(method){
+  if(method==="DANA")return"D";
+  if(method==="GoPay")return"G";
+  if(method==="OVO")return"O";
+  return"₿";
+}
+
+async function load(){
+  const s=await requireAuth();
+  if(!s)return;
+  const {data,error}=await sb.from("bank_accounts")
+    .select("id,method,account_number,account_name,is_default,created_at")
+    .eq("user_id",s.user.id)
+    .order("is_default",{ascending:false})
+    .order("id",{ascending:false});
+
+  if(error){
+    document.getElementById("list").innerHTML='<div class="empty">Gagal memuat data rekening.</div>';
+    showToast(error.message);
+    return;
+  }
+
+  const list=document.getElementById("list");
+  if(!data||!data.length){
+    list.innerHTML='<div class="empty">Belum ada rekening atau e-wallet tersimpan.</div>';
+    return;
+  }
+
+  list.innerHTML=data.map(x=>{
+    const safeMethod=String(x.method||"").replace(/[<>&"]/g,"");
+    const safeNum=String(x.account_number||"").replace(/[<>&"]/g,"");
+    const safeName=String(x.account_name||"").replace(/[<>&"]/g,"");
+    return `<div class="item">
+      <div class="item-main">
+        <div class="item-icon">${iconText(safeMethod)}</div>
+        <div>
+          <b>${safeMethod}${x.is_default?'<span class="default">UTAMA</span>':""}</b>
+          <small>${safeNum} · ${safeName}</small>
+        </div>
+      </div>
+      <button class="del" onclick="delAccount(${Number(x.id)})">Hapus</button>
+    </div>`;
+  }).join("");
+}
+
+async function delAccount(id){
+  if(!confirm("Hapus rekening/e-wallet ini?"))return;
+  const s=await requireAuth();if(!s)return;
+  const {error}=await sb.from("bank_accounts").delete().eq("id",id);
+  if(error){showToast(error.message);return;}
+  showToast("Rekening berhasil dihapus.");
+  load();
+}
+
+document.getElementById("form").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const s=await requireAuth();if(!s)return;
+
+  const method=methodEl.value;
+  const accountNumber=numberEl.value.trim();
+  const accountName=document.getElementById("name").value.trim();
+  const btn=document.getElementById("saveBtn");
+
+  if(!method||!accountNumber||!accountName){
+    showToast("Lengkapi semua data.");
+    return;
+  }
+
+  btn.disabled=true;btn.textContent="Menyimpan...";
+
+  // Jika belum ada rekening, jadikan otomatis sebagai rekening utama.
+  const existing=await sb.from("bank_accounts").select("id").eq("user_id",s.user.id).limit(1);
+  const isDefault=!existing.data||existing.data.length===0;
+
+  const {error}=await sb.from("bank_accounts").insert({
+    user_id:s.user.id,
+    method,
+    account_number:accountNumber,
+    account_name:accountName,
+    is_default:isDefault
+  });
+
+  btn.disabled=false;btn.textContent="Simpan Rekening";
+
+  if(error){
+    showToast(error.message);
+    return;
+  }
+
+  e.target.reset();
+  methodEl.value="DANA";
+  document.querySelectorAll(".method").forEach(x=>x.classList.toggle("active",x.dataset.method==="DANA"));
+  updateNumberLabel();
+  showToast(method+" berhasil disimpan.");
+  load();
+});
+
+updateNumberLabel();
+load();
+</script>
+</body>
+</html>
