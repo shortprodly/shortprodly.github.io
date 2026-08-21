@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Deposit & Beli AI-MAX - MyShort App</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+:root{
+ --bg:#07090b;--panel:#121417;--panel2:#0d0f12;
+ --gold:#f3c95f;--gold2:#ffe7a0;--muted:#92959e;
+ --text:#f5f5f6;--line:rgba(243,201,95,.30)
+}
+html{background:var(--bg)}
+body{
+ min-height:100vh;padding-bottom:86px;color:var(--text);
+ background:
+  radial-gradient(circle at 12% 3%,rgba(243,201,95,.14),transparent 25%),
+  radial-gradient(circle at 92% 35%,rgba(243,201,95,.065),transparent 28%),
+  linear-gradient(145deg,#07090b 0%,#121417 52%,#07090b 100%);
+ -webkit-font-smoothing:antialiased
+}
+body:before{
+ content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;
+ background-image:radial-gradient(rgba(243,201,95,.72) 1px,transparent 1px);
+ background-size:27px 27px
+}
+header{
+ position:relative;z-index:1;text-align:center;padding:23px 18px 19px;
+ background:linear-gradient(180deg,rgba(15,17,19,.96),rgba(15,17,19,.72));
+ border-bottom:1px solid rgba(243,201,95,.22)
+}
+header h2{font-size:24px;color:var(--gold2);letter-spacing:.1px;font-weight:800}
+.container{position:relative;z-index:1;max-width:760px;margin:auto;padding:18px 15px}
+.card{
+ background:
+  radial-gradient(circle at 100% 0%,rgba(243,201,95,.045),transparent 34%),
+  linear-gradient(145deg,rgba(27,29,29,.98),rgba(11,13,16,.99));
+ border:1px solid var(--line);border-radius:25px;padding:22px;
+ box-shadow:0 18px 55px rgba(0,0,0,.38);position:relative;overflow:hidden
+}
+.card:after{
+ content:"";position:absolute;width:180px;height:180px;right:-105px;top:-95px;
+ border:1px solid rgba(243,201,95,.14);border-radius:50%;pointer-events:none
+}
+label{display:block;margin-top:16px;margin-bottom:7px;color:#c8c9cd;font-size:13px;font-weight:650}
+select,input,textarea{
+ width:100%;padding:13px 14px;border:1px solid rgba(243,201,95,.22);
+ border-radius:13px;background:#0b0d10;color:#f5f5f6;
+ font-size:14px;outline:none
+}
+select:focus,input:focus,textarea:focus{border-color:rgba(243,201,95,.75);box-shadow:0 0 0 3px rgba(243,201,95,.07)}
+select{appearance:auto}
+textarea{resize:none;height:92px}
+.info{
+ margin-top:18px;padding:16px;border-radius:16px;
+ background:linear-gradient(145deg,rgba(243,201,95,.105),rgba(243,201,95,.035));
+ border:1px solid rgba(243,201,95,.20);color:#aeb1b8;font-size:12px;line-height:1.7
+}
+.info b{color:var(--gold2);font-size:14px}
+button{
+ width:100%;padding:14px;margin-top:18px;
+ background:linear-gradient(135deg,#ffe8a6,#d8a83a);
+ color:#18140b;border:1px solid rgba(255,231,160,.7);
+ border-radius:14px;font-size:14px;font-weight:850;cursor:pointer;
+ box-shadow:0 9px 25px rgba(243,201,95,.15)
+}
+button:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(243,201,95,.22)}
+.bottom{
+ position:fixed;z-index:20;bottom:0;left:0;width:100%;height:78px;
+ background:rgba(7,9,11,.97);backdrop-filter:blur(16px);
+ border-top:1px solid rgba(243,201,95,.18);
+ display:flex;justify-content:space-around;padding:7px 4px
+}
+.bottom a{
+ flex:1;text-decoration:none;color:#777b84;font-size:10px;text-align:center;padding-top:1px
+}
+.bottom a:nth-child(2){color:var(--gold2)}
+.bottom span{
+ display:block;font-size:19px;line-height:24px;margin-bottom:2px;
+ filter:grayscale(.15);transform:scale(.82)
+}
+@media(max-width:420px){
+ .container{padding:14px 12px}.card{padding:18px;border-radius:22px}
+ header h2{font-size:22px}.bottom span{font-size:18px}
+}
+
+.balanceBox{margin-bottom:12px;padding:13px;border:1px solid rgba(243,201,95,.22);border-radius:14px;background:#0b0d10}.balanceBox span{display:block;color:#8d9098;font-size:10px}.balanceBox b{display:block;color:#ffe39a;font-size:19px;margin-top:4px}.flow{margin-bottom:13px;padding:11px;border-radius:12px;background:#17130c;border:1px solid rgba(243,201,95,.16);color:#bcb091;font-size:9px;line-height:1.5}.paymentBox{margin-top:15px;padding:14px;border-radius:14px;background:#10151a;border:1px solid rgba(243,201,95,.18);color:#aaa;font-size:10px;line-height:1.65}.paymentBox b{color:#ffe7a0;font-size:12px}.paymentBox #paymentInfo{margin-top:6px;white-space:pre-line}
+
+.qrisPanel{display:none;margin-top:14px;padding:14px;border-radius:16px;background:#fff;border:1px solid rgba(243,201,95,.35);color:#111;text-align:center}
+.qrisPanel.show{display:block}
+.qrisPanel img{display:block;width:min(100%,360px);height:auto;margin:10px auto;border-radius:8px}
+.qrisMeta{font-size:11px;line-height:1.55;color:#333}
+.qrisMeta b{font-size:13px}
+.paymentHint{margin-top:8px;color:#aaa;font-size:10px;line-height:1.5}
+
+</style>
+
+<link rel="stylesheet" href="premium-brand.css">
+</head>
+
+<body>
+
+<header>
+
+<div class="sp-header-brand"><img class="sp-logo" src="logo.png" alt="MyShort Logo"><div><strong>MyShort Platform</strong><small>Member Area</small></div></div><h2>Deposit Saldo</h2>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<div class="balanceBox"><span>Saldo Wallet</span><b id="saldo">Rp 0</b></div>
+<div class="flow">1. Ajukan deposit → 2. Admin verifikasi → 3. Saldo masuk → 4. Beli AI-MAX</div>
+
+<label>Metode Pembayaran</label>
+
+<select id="metode">
+
+<option value="">Pilih Metode</option>
+
+<option>Transfer Bank</option>
+
+<option>QRIS</option>
+
+<option>E-Wallet</option>
+
+<option>Virtual Account</option>
+
+</select>
+
+<label>Nominal Deposit</label>
+
+<input
+type="number"
+id="nominal"
+placeholder="Contoh: 100000">
+
+<label>Catatan (Opsional)</label>
+
+<textarea
+id="catatan"
+placeholder="Tambahkan catatan bila diperlukan"></textarea>
+
+<div class="paymentBox">
+<b>Rekening / QRIS pembayaran</b>
+<div id="paymentInfo">Silakan pilih metode pembayaran.</div>
+<div class="paymentHint">Pembayaran tidak otomatis menambah saldo. Setelah membayar, kirim pengajuan deposit dan tunggu verifikasi admin.</div>
+</div>
+<div id="qrisPanel" class="qrisPanel">
+<div style="font-weight:800;font-size:14px">Scan QRIS untuk Pembayaran</div>
+<img src="qris-mitra-kami.png" alt="QRIS MITRA KAMI, PULSA & INTERNET">
+<div class="qrisMeta"><b>MITRA KAMI, PULSA &amp; INTERNET</b><br>NMID: ID026574820217</div>
+<div class="paymentHint" style="color:#555">Pastikan nominal pembayaran sesuai dengan nominal deposit yang Anda ajukan.</div>
+</div>
+
+<div class="info">
+
+<b>Informasi</b>
+
+<br><br>
+
+• Minimal deposit Rp10.000
+
+<br>
+
+• Maksimal deposit Rp10.000.000
+
+<br>
+
+• Status awal transaksi: Menunggu Verifikasi Admin
+<br>
+• Saldo hanya masuk setelah admin menyetujui deposit
+<br>
+• Setelah saldo Rp100.000 tersedia, buka Mission untuk membeli AI-MAX
+
+</div>
+
+<button onclick="kirimDeposit()">
+
+Kirim Deposit
+
+</button>
+
+</div>
+
+<div class="card" style="margin-top:14px;padding:16px"><h3 style="font-size:13px;color:#ffe7a0;margin-bottom:10px">Pengajuan Terakhir</h3><div id="depositList" style="display:grid;gap:7px;color:#999;font-size:10px">Memuat...</div></div>
+
+</div>
+
+<div class="bottom">
+
+<a href="dashboard.html">
+
+<span>🏠</span>
+
+Home
+
+</a>
+
+<a href="wallet.html">
+
+<span>💰</span>
+
+Wallet
+
+</a>
+
+<a href="mission.html">
+
+<span>🎯</span>
+
+Mission
+
+</a>
+
+<a href="profile.html">
+
+<span>👤</span>
+
+Profile
+
+</a>
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+const sb=window.sb;
+const money=n=>"Rp "+new Intl.NumberFormat("id-ID").format(Number(n||0));
+// Isi detail rekening/E-Wallet Anda sendiri di bawah. Jangan pernah menaruh secret key di sini.
+const PAYMENT_INFO={
+"Transfer Bank":"Nama penerima: ISI NAMA\\nNomor rekening: ISI NOMOR\\nBank: ISI BANK",
+"QRIS":"Scan QRIS di bawah. Merchant: MITRA KAMI, PULSA & INTERNET\\nNMID: ID026574820217",
+"E-Wallet":"Nama penerima: ISI NAMA\\nNomor E-Wallet: ISI NOMOR",
+"Virtual Account":"Nomor VA: dibuat/diberikan sesuai instruksi pembayaran Anda"
+};
+function updatePaymentMethod(){
+const method=document.getElementById("metode").value;
+document.getElementById("paymentInfo").textContent=PAYMENT_INFO[method]||"Silakan pilih metode pembayaran.";
+document.getElementById("qrisPanel").classList.toggle("show",method==="QRIS");
+}
+document.getElementById("metode").addEventListener("change",updatePaymentMethod);
+updatePaymentMethod();
+async function loadDeposit(){
+ const {data:{user},error:ae}=await sb.auth.getUser();
+ if(ae)throw ae;if(!user){location.href="index.html";return;}
+ const [w,d]=await Promise.all([
+  sb.from("wallets").select("balance").eq("user_id",user.id).single(),
+  sb.from("deposits").select("id,amount,method,status,created_at,processed_at,admin_note").eq("user_id",user.id).order("created_at",{ascending:false}).limit(10)
+ ]);
+ if(w.error)throw w.error;if(d.error)throw d.error;
+ document.getElementById("saldo").textContent=money(w.data.balance);
+ const old=document.getElementById("depositList");
+ if(old)old.innerHTML=(d.data||[]).map(x=>`<div class="depositRow"><b>#${x.id} • ${money(x.amount)}</b><span>${x.method} • ${x.status}</span></div>`).join("")||"Belum ada pengajuan deposit.";
+}
+async function kirimDeposit(){
+ const method=document.getElementById("metode").value;
+ const amount=Number(document.getElementById("nominal").value);
+ const note=document.getElementById("catatan").value.trim();
+ if(!method)return alert("Pilih metode pembayaran.");
+ if(amount<10000||amount>10000000)return alert("Nominal deposit Rp10.000 - Rp10.000.000.");
+ const btn=document.querySelector("button[onclick=\"kirimDeposit()\"]");if(btn)btn.disabled=true;
+ try{
+  const {data,error}=await sb.rpc("request_deposit",{p_amount:amount,p_method:method,p_note:note||null});
+  if(error)throw error;
+  alert("Deposit #"+data+" berhasil diajukan. Tunggu admin memverifikasi pembayaran.");
+  document.getElementById("nominal").value="";document.getElementById("catatan").value="";
+  await loadDeposit();
+ }catch(e){alert(e.message||"Pengajuan deposit gagal.");}finally{if(btn)btn.disabled=false;}
+}
+loadDeposit().catch(e=>alert(e.message||"Gagal memuat saldo."));
+</script>
+</body>
+
+</html>
